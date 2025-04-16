@@ -3,5 +3,5 @@ package com.ravinder.api.post.repository;
 import com.ravinder.api.post.entity.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PostRepository extends JpaRepository<Long, Post> {
+public interface PostRepository extends JpaRepository<Post, Long> {
 }

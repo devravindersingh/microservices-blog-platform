@@ -1,0 +1,24 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: POST-SERVICE
+  datasource:
+    url: jdbc:postgresql://postgres-post:5432/post_db
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  data:
+    redis:
+      host: redis
+      port: 6379
+
+logging:
+  level:
+    org.springframework.cache: trace
+    root: info
+
