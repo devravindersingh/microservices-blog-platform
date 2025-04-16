@@ -78,4 +78,10 @@ public class PostService {
     }
 
 
+    @CacheEvict(value = {"posts", "postList"}, allEntries = true)
+    public void clearCache(){
+        logger.info("Clearing all caches....");
+    }
+
+
 }

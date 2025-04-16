@@ -41,4 +41,12 @@ public class PostController {
     public void deletePost(@PathVariable Long id){
         postService.deletePost(id);
     }
+
+    @PostMapping("/cache/clear")
+    public String clearCache(){
+        postService.clearCache();
+        return "Cache cleared successfully";
+    }
+
+
 }
