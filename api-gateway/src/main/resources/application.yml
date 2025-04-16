@@ -1,0 +1,26 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: post-service
+          uri: lb://POST-SERVICE
+          predicates:
+            - Path=/api/posts/**
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/api/users/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://service-discovery:8761/eureka
+
+logging:
+  level:
+    root: info
