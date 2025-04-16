@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,12 +25,19 @@ public class PostService {
     @Autowired
     private TaskScheduler taskScheduler;
 
+    @Autowired
+    private KafkaTemplate<String, String> kafkaTemplate;
+
     public Post createPost(Post post){
         taskScheduler.scheduleTask(new Task(
                 "create-post-" + System.currentTimeMillis(),
                 "Save post to DB",
                 1,
-                () -> postRepository.save(post)
+                () -> {
+                    postRepository.save(post);
+                    kafkaTemplate.send("post-created", post.getAuthor());
+                    logger.info("Sent post-created event for author: {}", post.getAuthor());
+                }
         ));
         return post;
     }
