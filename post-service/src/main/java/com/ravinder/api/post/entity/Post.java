@@ -20,6 +20,9 @@ public class Post implements Serializable {
     private String content;
     private String author;
 
+    public Post() {
+    }
+
     public Post(String title, String content, String author) {
         this.title = title;
         this.content = content;
