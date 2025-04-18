@@ -47,12 +47,15 @@ services:
     ports:
       - "9092:9092"
 
+  zipkin:
+    image: openzipkin/zipkin:latest
+    ports:
+      - "9411:9411"
+
   service-discovery:
     build: ./service-discovery
     ports:
       - "8761:8761"
-    depends_on:
-      - kafka
 
   post-service:
     build: ./post-service
@@ -63,6 +66,7 @@ services:
       - redis
       - kafka
       - service-discovery
+      - zipkin
 
   user-service:
     build: ./user-service
@@ -72,6 +76,7 @@ services:
       - postgres-user
       - kafka
       - service-discovery
+      - zipkin
 
   api-gateway:
     build: ./api-gateway
@@ -79,6 +84,7 @@ services:
       - "8080:8080"
     depends_on:
       - service-discovery
+      - zipkin
 
 volumes:
   postgres-post-data:
